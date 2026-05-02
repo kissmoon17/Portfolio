@@ -187,6 +187,11 @@ h1 span {
   gap: 0.5rem;
 }
 
+.btn-gmail {
+  background: linear-gradient(120deg, #d93025, #ea4335);
+  color: #fff;
+}
+
 .btn-instagram {
   background: linear-gradient(135deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
   color: #fff;
