@@ -206,7 +206,9 @@ h1 span {
 }
 
 @keyframes ping {
-  75%, 100% {
+
+  75%,
+  100% {
     transform: scale(2);
     opacity: 0;
   }
@@ -304,12 +306,10 @@ h1 span {
   left: -150px;
   width: 120px;
   height: 100%;
-  background: linear-gradient(
-    90deg,
-    rgba(255, 255, 255, 0),
-    rgba(255, 255, 255, 0.28),
-    rgba(255, 255, 255, 0)
-  );
+  background: linear-gradient(90deg,
+      rgba(255, 255, 255, 0),
+      rgba(255, 255, 255, 0.28),
+      rgba(255, 255, 255, 0));
   animation: shimmer 1.7s infinite;
 }
 
