@@ -103,18 +103,39 @@
       <div class="container reveal">
         <div class="section-heading">
           <p class="eyebrow">Projects</p>
-          <h2>Coming soon</h2>
+          <h2>Selected work</h2>
         </div>
         <p class="projects-note">
-          I am currently preparing my first project portfolio. These placeholders
-          represent where upcoming work will be showcased.
+          HamroGPT is live below. More projects will appear in the remaining cards
+          as they are ready.
         </p>
         <div class="projects-grid">
-          <article class="project-card skeleton-card">
-            <div class="skeleton skeleton-image"></div>
-            <div class="skeleton skeleton-line large"></div>
-            <div class="skeleton skeleton-line"></div>
-            <div class="skeleton skeleton-line short"></div>
+          <article
+            class="project-card project-card--interactive"
+            id="hamrogptCard"
+            tabindex="0"
+            role="button"
+            aria-haspopup="dialog"
+            aria-controls="hamrogptModal"
+            aria-label="Open HamroGPT in-browser demo"
+          >
+            <div class="project-thumb" aria-hidden="true">
+              <span class="project-thumb-icon">🤖</span>
+            </div>
+            <h3 class="project-title">HamroGPT</h3>
+            <p class="project-desc">
+              A small terminal chat assistant in Python: greetings, Q&amp;A, add/subtract,
+              and BMI — with a lighthearted personality.
+            </p>
+            <div class="project-tags">
+              <span class="project-tag">Python</span>
+              <span class="project-tag">CLI</span>
+            </div>
+            <p class="project-try">Click or press Enter to try it in your browser.</p>
+            <p class="project-run">
+              Or run locally:
+              <code class="project-code">python hamrogpt.py</code>
+            </p>
           </article>
           <article class="project-card skeleton-card">
             <div class="skeleton skeleton-image"></div>
@@ -173,6 +194,38 @@
     </section>
   </main>
 
+  <div
+    class="modal"
+    id="hamrogptModal"
+    hidden
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="hamrogptModalTitle"
+  >
+    <div class="modal-backdrop" data-modal-close tabindex="-1"></div>
+    <div class="modal-panel">
+      <div class="modal-header">
+        <h2 id="hamrogptModalTitle" class="modal-title">HamroGPT</h2>
+        <button type="button" class="modal-close" data-modal-close aria-label="Close chat">
+          &times;
+        </button>
+      </div>
+      <div class="terminal" id="hamrogptLog" aria-live="polite"></div>
+      <form class="terminal-form" id="hamrogptForm" autocomplete="off">
+        <label class="visually-hidden" for="hamrogptInput">Your message to HamroGPT</label>
+        <span class="terminal-prompt" id="hamrogptPromptLabel">You:</span>
+        <input
+          type="text"
+          id="hamrogptInput"
+          class="terminal-input"
+          placeholder="Type a message and press Enter…"
+        />
+        <button type="submit" class="btn btn-primary terminal-send">Send</button>
+      </form>
+      <p class="modal-footnote">In-browser demo (JavaScript). Full CLI: <code>python hamrogpt.py</code></p>
+    </div>
+  </div>
+
   <footer class="site-footer">
     <div class="container footer-content">
       <p>© <span id="year"></span> Krishmon Karki. All rights are reserved.</p>
@@ -180,6 +233,7 @@
   </footer>
 
   <script src="script.js"></script>
+  <script src="hamrogpt-browser.js"></script>
 </body>
 
 </html>
