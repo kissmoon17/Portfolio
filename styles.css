@@ -320,6 +320,29 @@ h1 span {
   line-height: 1;
 }
 
+.project-thumb--baiku {
+  overflow: hidden;
+  flex-direction: column;
+  gap: 0.15rem;
+  background: linear-gradient(135deg, #fffdf9, #f1ece3);
+  border-color: #e2dcd2;
+}
+
+.baiku-wordmark {
+  color: #282624;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 2.8rem;
+  letter-spacing: -1.5px;
+  line-height: 1;
+}
+
+.baiku-subtitle {
+  color: #6e5c4d;
+  font-size: 0.55rem;
+  font-weight: 700;
+  letter-spacing: 0.28em;
+}
+
 .project-title {
   font-size: 1.15rem;
   margin: 0 0 0.5rem;
@@ -368,6 +391,11 @@ h1 span {
   border-color: rgba(124, 156, 255, 0.45);
   box-shadow: var(--shadow);
   outline: none;
+}
+
+.project-card--link {
+  color: inherit;
+  text-decoration: none;
 }
 
 .project-run {
