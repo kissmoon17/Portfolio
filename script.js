@@ -6,50 +6,60 @@ const reveals = document.querySelectorAll(".reveal");
 
 if (menuToggle && siteNav) {
   menuToggle.addEventListener("click", () => {
-    siteNav.classList.toggle("open");
+    const isOpen = siteNav.classList.toggle("open");
+    menuToggle.setAttribute("aria-expanded", String(isOpen));
+    menuToggle.setAttribute("aria-label", isOpen ? "Close navigation" : "Open navigation");
   });
 }
 
 navLinks.forEach((link) => {
   link.addEventListener("click", () => {
-    siteNav.classList.remove("open");
+    siteNav?.classList.remove("open");
+    menuToggle?.setAttribute("aria-expanded", "false");
+    menuToggle?.setAttribute("aria-label", "Open navigation");
   });
+});
+
+document.addEventListener("keydown", (event) => {
+  if (event.key === "Escape" && siteNav?.classList.contains("open")) {
+    siteNav.classList.remove("open");
+    menuToggle?.setAttribute("aria-expanded", "false");
+    menuToggle?.setAttribute("aria-label", "Open navigation");
+    menuToggle?.focus();
+  }
 });
 
 const setActiveNav = () => {
   let currentId = "";
   sections.forEach((section) => {
-    const sectionTop = section.offsetTop - 120;
-    if (window.scrollY >= sectionTop) {
-      currentId = section.getAttribute("id");
-    }
+    if (window.scrollY >= section.offsetTop - 130) currentId = section.id;
   });
-
   navLinks.forEach((link) => {
-    link.classList.remove("active");
-    if (link.getAttribute("href") === `#${currentId}`) {
-      link.classList.add("active");
-    }
+    const isCurrent = link.getAttribute("href") === `#${currentId}`;
+    link.classList.toggle("active", isCurrent);
+    if (isCurrent) link.setAttribute("aria-current", "location");
+    else link.removeAttribute("aria-current");
   });
 };
 
-const revealObserver = new IntersectionObserver(
-  (entries) => {
+if ("IntersectionObserver" in window) {
+  document.documentElement.classList.add("has-reveal");
+  const revealObserver = new IntersectionObserver((entries, observer) => {
     entries.forEach((entry) => {
       if (entry.isIntersecting) {
         entry.target.classList.add("show");
+        observer.unobserve(entry.target);
       }
     });
-  },
-  { threshold: 0.15 }
-);
-
-reveals.forEach((el) => revealObserver.observe(el));
-
-const yearNode = document.getElementById("year");
-if (yearNode) {
-  yearNode.textContent = String(new Date().getFullYear());
+  }, { threshold: 0.12 });
+  reveals.forEach((element) => revealObserver.observe(element));
+} else {
+  reveals.forEach((element) => element.classList.add("show"));
 }
 
-window.addEventListener("scroll", setActiveNav);
+const yearNode = document.getElementById("year");
+if (yearNode) yearNode.textContent = String(new Date().getFullYear());
+
+window.addEventListener("scroll", setActiveNav, { passive: true });
 window.addEventListener("load", setActiveNav);
+setActiveNav();
