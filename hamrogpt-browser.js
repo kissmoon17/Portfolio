@@ -89,6 +89,11 @@
     }
   }
 
+  function getFocusableElements() {
+    return [...modal.querySelectorAll("button, input, [href], [tabindex]:not([tabindex='-1'])")]
+      .filter((element) => !element.disabled && element.getAttribute("aria-hidden") !== "true");
+  }
+
   function handleIdle(text) {
     if (!text) return;
     if (QUIT.has(text)) {
@@ -153,12 +158,14 @@
   }
 
   function parseFloatStrict(s) {
-    const n = Number.parseFloat(s);
+    const n = Number(String(s).trim());
     return Number.isFinite(n) ? n : NaN;
   }
 
   function parseIntStrict(s) {
-    const n = Number.parseInt(s, 10);
+    const value = String(s).trim();
+    if (!/^[+-]?\d+$/.test(value)) return NaN;
+    const n = Number.parseInt(value, 10);
     return Number.isFinite(n) ? n : NaN;
   }
 
@@ -216,7 +223,7 @@
         state = { kind: "bmi_height", data: { age: null } };
       } else {
         const age = parseIntStrict(raw);
-        if (Number.isNaN(age)) {
+        if (Number.isNaN(age) || age <= 0 || age > 130) {
           appendLine("bot", "Oops! Gotta enter valid numbers, gangy.");
           resetFlow();
           return;
@@ -300,9 +307,27 @@
   });
 
   document.addEventListener("keydown", (e) => {
-    if (!modal.hidden && e.key === "Escape") {
+    if (modal.hidden) return;
+    if (e.key === "Escape") {
       e.preventDefault();
       closeModal();
+      return;
+    }
+    if (e.key !== "Tab") return;
+
+    const focusable = getFocusableElements();
+    if (!focusable.length) return;
+    const first = focusable[0];
+    const last = focusable[focusable.length - 1];
+    if (!modal.contains(document.activeElement)) {
+      e.preventDefault();
+      first.focus();
+    } else if (e.shiftKey && document.activeElement === first) {
+      e.preventDefault();
+      last.focus();
+    } else if (!e.shiftKey && document.activeElement === last) {
+      e.preventDefault();
+      first.focus();
     }
   });
 })();
