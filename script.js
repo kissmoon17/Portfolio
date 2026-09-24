@@ -3,6 +3,23 @@ const siteNav = document.getElementById("siteNav");
 const navLinks = document.querySelectorAll(".site-nav a");
 const sections = document.querySelectorAll("main section");
 const reveals = document.querySelectorAll(".reveal");
+const themeToggle = document.getElementById("themeToggle");
+
+const updateThemeToggle = () => {
+  const isDark = document.documentElement.dataset.theme === "dark";
+  themeToggle?.setAttribute("aria-label", isDark ? "Switch to light mode" : "Switch to dark mode");
+  themeToggle?.setAttribute("aria-pressed", String(isDark));
+  const themeColor = document.querySelector('meta[name="theme-color"]');
+  themeColor?.setAttribute("content", isDark ? "#20231f" : "#f4f1e9");
+};
+
+themeToggle?.addEventListener("click", () => {
+  const nextTheme = document.documentElement.dataset.theme === "dark" ? "light" : "dark";
+  document.documentElement.dataset.theme = nextTheme;
+  localStorage.setItem("theme", nextTheme);
+  updateThemeToggle();
+});
+updateThemeToggle();
 
 if (menuToggle && siteNav) {
   menuToggle.addEventListener("click", () => {
