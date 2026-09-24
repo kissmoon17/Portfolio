@@ -302,6 +302,8 @@ h2 { margin-bottom: 25px; font-size: clamp(2.6rem, 5vw, 4.5rem); line-height: 1.
   .eyebrow { font-size: .62rem; letter-spacing: .08em; }
   h1 { font-size: clamp(2.9rem, 14vw, 4.7rem); line-height: .94; }
   .hero-text { max-width: 420px; font-size: .96rem; }
+  .hero-actions { gap: 8px; }
+  .hero-actions .btn { min-height: 44px; gap: 8px; padding: 0 11px; font-size: .76rem; white-space: nowrap; }
   .hero-aside { display: grid; grid-template-columns: 110px 1fr; align-items: center; gap: 21px; margin-top: 44px; }
   .profile-photo-wrap { width: 100px; margin: 0 0 0 7px; }
   .aside-notes { width: 100%; }
